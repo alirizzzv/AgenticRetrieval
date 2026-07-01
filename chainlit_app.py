@@ -6,6 +6,7 @@ resolve correctly. Charts from the code agent are rendered inline.
 """
 import chainlit as cl
 
+import app.chainlit_patch  # noqa: F401  — rebinds local_steps to carry a default
 from app.graph.build import get_graph
 from app.memory import SessionMemory
 from app.models.schemas import Intent

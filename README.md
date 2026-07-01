@@ -1,7 +1,10 @@
 # Agentic Knowledge Retrieval System
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.9+-blue?logo=python&logoColor=white" />
+  <a href="https://github.com/alirizzzv/RAG/actions/workflows/ci.yml">
+    <img src="https://github.com/alirizzzv/RAG/actions/workflows/ci.yml/badge.svg" />
+  </a>
+  <img src="https://img.shields.io/badge/Python-3.9-blue?logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/LangGraph-0.6-orange?logo=chainlink&logoColor=white" />
   <img src="https://img.shields.io/badge/ChromaDB-1.5-green?logo=databricks&logoColor=white" />
   <img src="https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white" />
@@ -251,6 +254,20 @@ python eval/run_eval.py
 
 ---
 
+## Testing
+
+A `pytest` suite covers the sandbox executor, the self-correcting retry loop
+(fake LLM returns broken code, then correct code — asserting recovery), session
+memory, schema validation, and a regression test for the Chainlit context fix.
+CI runs it on every push (see the badge above).
+
+```bash
+pip install -r requirements-dev.txt
+pytest -q
+```
+
+---
+
 ## Project Structure
 
 ```
@@ -261,6 +278,7 @@ RAG/
 │   ├── config.py                # Settings (pydantic-settings)
 │   ├── vectorstore.py           # Shared ChromaDB accessor
 │   ├── memory.py                # Per-session conversation memory
+│   ├── chainlit_patch.py        # Portable Chainlit ContextVar fix
 │   ├── graph/
 │   │   ├── state.py             # Typed graph state
 │   │   ├── router.py            # Intent classifier node
@@ -271,14 +289,15 @@ RAG/
 │   ├── ingest/loader.py         # PDF → chunks → ChromaDB
 │   ├── sandbox/executor.py      # subprocess + Docker backends
 │   └── models/schemas.py        # Pydantic schemas
-├── scripts/
-│   ├── generate_sample_docs.py  # Reproducible sample corpus
-│   └── make_demo_gif.py         # Demo GIF generator
+├── tests/                       # pytest suite
 ├── eval/                        # Evaluation set + harness
+├── scripts/                     # Sample-doc + demo-GIF generators
 ├── data/                        # PDFs + ChromaDB store
+├── .github/workflows/ci.yml     # GitHub Actions CI
 ├── Dockerfile
 ├── .env.example
-└── requirements.txt
+├── requirements.txt             # Pinned runtime deps
+└── requirements-dev.txt         # + pytest
 ```
 
 ---

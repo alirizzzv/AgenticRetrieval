@@ -1,39 +1,42 @@
+# Pinned to the exact versions this project was built and tested against
+# (Python 3.9 — matches the Dockerfile base image for dev/prod parity).
+
 # ---- Web / UI ----
-fastapi
-uvicorn[standard]
-chainlit
+fastapi==0.115.14
+uvicorn[standard]==0.25.0
+chainlit==2.3.0                 # see app/chainlit_patch.py for the pinned-version bugfix
 
 # ---- Agent orchestration ----
-langgraph
-langchain
-langchain-community
+langgraph==0.6.11
+langchain==0.3.30
+langchain-core==0.3.86
+langchain-community==0.3.31
+langchain-text-splitters==0.3.11
 
-# ---- LLM providers (swap via LLM_MODEL env var; only one key needed) ----
-langchain-google-genai        # default: free Gemini tier
-langchain-groq                # alternative free tier
-# langchain-anthropic         # uncomment to use Claude
-# langchain-openai            # uncomment to use GPT
+# ---- LLM providers (swap via LLM_MODEL; only one key needed) ----
+langchain-google-genai==2.1.12
+langchain-groq==0.3.8
+# langchain-anthropic         # add + pin to use Claude
+# langchain-openai            # add + pin to use GPT
 
 # ---- Retrieval / vector store ----
-chromadb
-langchain-chroma
-langchain-huggingface
-sentence-transformers          # local embeddings (free, offline)
-pypdf                          # PDF ingestion
+chromadb==1.5.9
+langchain-chroma==0.2.6
+langchain-huggingface==0.3.1
+sentence-transformers==5.1.2    # local embeddings (free, offline)
+pypdf==6.14.2
 
 # ---- Validation / config ----
-pydantic
-pydantic-settings
-python-dotenv
+pydantic==2.13.4
+pydantic-settings==2.11.0
+python-dotenv==1.2.1
 
-# ---- Sandbox (docker backend optional; subprocess fallback needs no extra dep) ----
-docker
+# ---- Sandbox (docker backend optional; subprocess needs no extra dep) ----
+docker==7.1.0
 
 # ---- Code-exec agent runtime (charts / tables / data wrangling) ----
-pandas
-matplotlib
+pandas==2.3.3
+matplotlib==3.9.4
 
 # ---- Dev / sample-data generation (only needed to regenerate data/*.pdf) ----
-reportlab
-
-# NOTE: versions left unpinned for initial scaffold; run `pip freeze > requirements.lock.txt` after P1 verifies the install.
+reportlab==5.0.0
